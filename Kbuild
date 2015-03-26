@@ -36,7 +36,7 @@ endef
 bounds-file := include/generated/bounds.h
 
 always  := $(bounds-file)
-targets := $(bounds-file) kernel/bounds.s
+targets := kernel/bounds.s
 
 # We use internal kbuild rules to avoid the "is up to date" message from make
 kernel/bounds.s: kernel/bounds.c FORCE
