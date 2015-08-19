@@ -163,6 +163,10 @@ clang-ifversion =  $(call __cc-ifversion, clang, $(1), $(2), $(3), $(4))
 # clang-if-fullversion
 clang-if-fullversion = (call __cc-if-fullversion, clang, $(1), $(2), $(3), $(4))
 
+# cc-name
+# Expands to either gcc or clang
+cc-name = $(shell $(CC) -v 2>&1 | grep -q "clang version" && echo clang || echo gcc)
+
 # cc-version
 cc-version = $(shell $(CONFIG_SHELL) $(srctree)/scripts/gcc-version.sh $(CC))
 
