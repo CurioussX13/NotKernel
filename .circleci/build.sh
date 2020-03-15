@@ -10,7 +10,7 @@ export PATH=${CLANG_PATH}:${PATH}
 export LD_LIBRARY_PATH="/p-clang/bin/../lib:$PATH"
 		
 git clone --depth=1 https://github.com/HANA-CI-Build-Project/proton-clang -b master p-clang
-git clone --depth 1 https://github.com/CurioussX13/Wahooo wahoo
+git clone --depth 1 https://github.com/CurioussX13/Waho wahoo
 git clone --depth=1 git://github.com/CurioussX13/AnyKernel3 -b mido ak3
 TOOL_VERSION=$("$/p-clang/bin/clang" --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 
