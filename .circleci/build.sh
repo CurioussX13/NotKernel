@@ -46,18 +46,18 @@ function zipper()
 }
 function success() 
 {
- sendInfo "<b>Commit:</b><code>$(git --no-pager log --pretty=format:'"%h - %s (%an)"' -1)</code>" \
-          "<b>Compile Time:</b><code>$(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s)</code>" \
-          "<b>Toolchain:</b><code>${TOOL_VERSION}</code>" \
-          "<b>  proJTHy Success  </b>"
+ sendInfo "<b>Commit: </b><code>$(git --no-pager log --pretty=format:'"%h - %s (%an)"' -1)</code>" \
+          "<b>Compile Time: </b><code>$(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s)</code>" \
+          "<b>Toolchain: </b><code>${TOOL_VERSION}</code>" \
+          "<b>proJTHy Success</b>"
  sendLog
 }
 
 function failed() 
 {
  sendInfo "<b>Commit:</b><code>$(git --no-pager log --pretty=format:'"%h - %s (%an)"' -1)</code>" \
-          "<b>   ProJThy Failed  </b>" \
-          "Total Time Elapsed:$(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
+          "<b>ProJThy Failed</b>" \
+          "<b>Total Time Elapsed: </b><code>$(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.</code>"
  sendLog
  exit 1;
  }
