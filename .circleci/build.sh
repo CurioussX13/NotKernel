@@ -59,7 +59,7 @@ function compile() {
 			cd /wahoo || exit
 			START=$(date +"%s")
 			make ARCH=arm64 mido_defconfig O=out 
-			PATH="$(pwd)/p-clang/bin/:${PATH}" \
+			PATH="/p-clang/bin/:${PATH}" \
 			make O=out -j16 2>&1| tee /build.log \
 				CC=clang \
 							CLANG_TRIPLE=aarch64-linux-gnu- \
