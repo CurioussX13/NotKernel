@@ -39,6 +39,7 @@ function sendZip()
 
 function zipper()
 {
+ cp {DTBI} /ak3
  cd /ak3 || exit 
  make -j16
  mv Thy-Kernel.zip Thy-K-"${TANGGAL}".zip
@@ -84,8 +85,8 @@ function compile()
   END=$(date +"%s")
   DIFF=$(($END - $START))
   success
-  cp {DTBI} /ak3
   zipper
   sendZip
 }
+
 compile
