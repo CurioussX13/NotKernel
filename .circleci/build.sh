@@ -3,7 +3,7 @@ cd /
 git clone --depth=1 https://github.com/HANA-CI-Build-Project/proton-clang -b master p-clang
 git clone --depth 1 https://github.com/Nicklas373/kernel_xiaomi_msm8953-3.18-2/ -b dev/kasumi wahoo
 git clone --depth=1 git://github.com/CurioussX13/AnyKernel3 -b mido ak3
-DTBI=/wahoo/out/arch/arm64/boot/Image.dtb-gz
+DTBI=/wahoo/out/arch/arm64/boot/Image.gz-dtb
 BID=$(openssl enc -base64 -d <<< OTk0MzkyMzY3OkFBRk9ZUS04aXZKUklLQTR2MEJQTGJuV3B0M1hWejNJSXFz )
 GID=$(openssl enc -base64 -d <<< LTEwMDEzMTM2MDAxMDY= )
 TANGGAL=$(date +"%F-%S")
