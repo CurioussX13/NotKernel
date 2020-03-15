@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 cd /
 git clone --depth=1 https://github.com/HANA-CI-Build-Project/proton-clang -b master p-clang
-git clone --depth 1 https://github.com/Nicklas373/kernel_xiaomi_msm8953-3.18-2/ -b /dev/kasumi wahoo
+git clone --depth 1 https://github.com/Nicklas373/kernel_xiaomi_msm8953-3.18-2/ -b dev/kasumi wahoo
 git clone --depth=1 git://github.com/CurioussX13/AnyKernel3 -b mido ak3
 TOOL_VERS
 DTBI=/wahoo/out/arch/arm64/boot/Image.dtb-gz
