@@ -1,76 +1,81 @@
 #!/usr/bin/env bash
-echo "Cloning dependencies"
-git clone --depth=1 https://github.com/dracarys18/NotKernel kernel
-cd kernel
-git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b android-9.0.0_r39 toolchain
-git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9 -b android-9.0.0_r39 toolchain32
-git clone --depth=1 https://github.com/dracarys18/AnyKernel3.git Anykernel
-echo "Done"
-GCC="$(pwd)/aarch64-linux-android-"
-IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
+cd /
+DTBI=/wahoo/out/arch/arm64/boot/Image.dtb-gz
+BID=$(openssl enc -base64 -d <<< OTk0MzkyMzY3OkFBRk9ZUS04aXZKUklLQTR2MEJQTGJuV3B0M1hWejNJSXFz )
+GID=$(openssl enc -base64 -d <<< LTEwMDEzMTM2MDAxMDY= )
 TANGGAL=$(date +"%F-%S")
-START=$(date +"%s")
-export CONFIG_PATH=$PWD/arch/arm64/configs/mido_defconfig
-PATH="${PWD}/toolchain/bin:${PWD}/toolchain32/bin:${PATH}"
-export CROSS_COMPILE_ARM32="$(pwd)/toolchain32/bin/arm-linux-androideabi-"
-export CROSS_COMPILE="aarch64-linux-android-"
 export ARCH=arm64
-export KBUILD_BUILD_HOST=NotKernel
-export KBUILD_BUILD_USER="root"
-# sticker plox
-function sticker() {
-    curl -s -X POST "https://api.telegram.org/bot$token/sendSticker" \
-        -d sticker="CAADBQADVAADaEQ4KS3kDsr-OWAUFgQ" \
-        -d chat_id=$chat_id
-}
-# Send info plox channel
-function sendinfo() {
-    curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
-        -d chat_id="$chat_id" \
-        -d "disable_web_page_preview=true" \
-        -d "parse_mode=html" \
-        -d text="<b>• NotKernel •</b>%0ABuild started on <code>Circle CI/CD</code>%0AFor device <b>Xiaomi Redmi note 4</b> (mido)%0Abranch <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0AUsing compiler: <code>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b> #Test"
-}
-# Push kernel to channel
-function push() {
-    cd Anykernel
-    ZIP=$(echo *.zip)
-    curl -F document=@$ZIP "https://api.telegram.org/bot$token/sendDocument" \
-        -F chat_id="$chat_id" \
-        -F "disable_web_page_preview=true" \
-        -F "parse_mode=html" \
-        -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>Xiaomi Redmi Note 4 (mido)</b> | <b>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</b>"
-}
-# Fin Error
-function finerr() {
-    curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
-        -d chat_id="$chat_id" \
-        -d "disable_web_page_preview=true" \
-        -d "parse_mode=markdown" \
-        -d text="Build is throwing  error(s)"
-    exit 1
-}
-# Compile plox
-function compile() {
-    make O=out clean && make O=out mrproper && make O=out mido_defconfig
-    make O=out -j$(nproc --all) 2>&1| tee build.log
-    if ! [ -a $IMAGE ]; then
-                finerr
-                exit 1
-   else
-    cp $PWD/out/arch/arm64/boot/Image.gz-dtb $PWD/Anykernel/zImage
-   fi 
-}
-
-# Zipping
-function zipping() {
-    cd Anykernel || exit 1
-    zip -r9 NotKernel-Mido-${TANGGAL}.zip *
-    cd .. 
-}
-sendinfo
-compile
-zipping
-END=$(date +"%s")
-DIFF=$(($END - $START))
-push
+export CLANG_PATH=/p-clang/bin
+export PATH=${CLANG_PATH}:${PATH}
+export LD_LIBRARY_PATH="/p-clang/bin/../lib:$PATH"
+        
+        git clone --depth=1 https://github.com/HANA-CI-Build-Project/proton-clang -b master p-clang
+        git clone --depth 1 https://github.com/CurioussX13/Wahooo wahoo
+        git clone --depth=1 git://github.com/CurioussX13/AnyKernel3 -b mido ak3
+        TOOL_VERSION=$("$/p-clang/bin/clang" --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
+        
+        
+        
+        function sendInfo() {
+            curl -s -X POST https://api.telegram.org/bot"$BID"/sendMessage -d chat_id="$GID" -d "parse_mode=HTML" -d text="$(
+                        for POST in "${@}"; do
+                                        echo "${POST}"
+                                                    done
+                                                            )" 
+                                                            }
+                                                            function sendLog() {
+                                                                curl -F chat_id="${GID}" -F document=@/build.log https://api.telegram.org/bot"$BID"/sendDocument
+                                                                }
+                                                                function sendZip(){
+                                                                cd /ak3 || exit
+                                                                ZIP=$(echo *.zip)
+                                                                curl -F chat_id="${GID}" -F document="@$ZIP"  https://api.telegram.org/bot"${BID}"/sendDocument
+                                                                }
+                                                                function zipper(){
+                                                                cd /ak3 || exit 
+                                                                make -j16
+                                                                mv Thy-Kernel.zip Thy-K-"${TANGGAL}".zip
+                                                                }
+                                                                function success() {
+                                                                sendInfo "<b>Commit: </b><code> $(git --no-pager log --pretty=format:'"%h - %s (%an)"' -1)</code>" \
+                                                                            "<b>Compile Time :</b><code> $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s)</code>" \
+                                                                                "<b> Toolchain:</b><code>${TOOL_VERSION}</code>" \
+                                                                                            "<b>            proJTHy   Success          </b>"
+                                                                                                sendLog
+                                                                                                }
+                                                                                                
+                                                                                                function failed() {
+                                                                                                sendInfo "<b>Commit: </b><code> $(git --no-pager log --pretty=format:'"%h - %s (%an)"' -1)</code>" \
+                                                                                                   "<b>    ProJThy Failed   </b>" \
+                                                                                                              "Total Time Elapsed: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
+                                                                                                                           sendLog
+                                                                                                                                        exit 1;
+                                                                                                                                                }
+                                                                                                                                                
+                                                                                                                                                
+                                                                                                                                                function compile() {
+                                                                                                                                                
+                                                                                                                                                            cd /wahoo || exit
+                                                                                                                                                                        START=$(date +"%s")
+                                                                                                                                                                                    make ARCH=arm64 mido_defconfig O=out 
+                                                                                                                                                                                                PATH="$(pwd)/p-clang/bin/:${PATH}" \
+                                                                                                                                                                                                            make O=out -j16 2>&1| tee /build.log \
+                                                                                                                                                                                                                            CC=clang \
+                                                                                                                                                                                                                                                        CLANG_TRIPLE=aarch64-linux-gnu- \
+                                                                                                                                                                                                                                                                                        CROSS_COMPILE=aarch64-linux-gnu- \
+                                                                                                                                                                                                                                                                                                                        CROSS_COMPILE_ARM32=arm-linux-gnueabi-
+                                                                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                                                        if ! [ -a $DTBI ]; then
+                                                                                                                                                                                                                                                                                                                                        END=$(date +"%s")
+                                                                                                                                                                                                                                                                                                                                        DIFF=$(($END - $START))
+                                                                                                                                                                                                                                                                                                                                         failed
+                                                                                                                                                                                                                                                                                                                                          fi
+                                                                                                                                                                                                                                                                                                                                           
+                                                                                                                                                                                                                                                                                                                                           END=$(date +"%s")
+                                                                                                                                                                                                                                                                                                                                           DIFF=$(($END - $START))
+                                                                                                                                                                                                                                                                                                                                           success
+                                                                                                                                                                                                                                                                                                                                           cp {DTBI} /ak3
+                                                                                                                                                                                                                                                                                                                                           zipper
+                                                                                                                                                                                                                                                                                                                                           sendZip
+                                                                                                                                                                                                                                                                                                                                           }
+                                                                                                                                                                                                                                                                                                                                           compile
