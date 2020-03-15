@@ -6,7 +6,7 @@ jobs:
    steps:
       - run:
           command: |
-           apt-get -y update &&  apt-get -y install  build-essential zip curl git wget python
+           apt -y update && apt -y install bc build-essential zip curl git wget python
            wget -O build.sh https://raw.githubusercontent.com/CurioussX13/Waho/10-stable/.circleci/build.sh
            chmod a+x build.sh
            bash build.sh
