@@ -6,7 +6,7 @@ jobs:
    steps:
       - run:
           command: |
-           apt-get -y update &&  apt-get -y install bc build-essential zip curl libstdc++6 git wget python  libssl-dev rsync flex bison
+           apt-get -y update &&  apt-get -y install bc clang gcc build-essential zip curl libstdc++6 git wget python  libssl-dev rsync flex bison
            wget -O build.sh https://raw.githubusercontent.com/CurioussX13/Waho/10-stable/.circleci/build.sh
            chmod a+x build.sh
            bash build.sh
