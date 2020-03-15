@@ -13,8 +13,6 @@ export PATH=${CLANG_PATH}:${PATH}
 export LD_LIBRARY_PATH="/p-clang/bin/../lib:$PATH"
 
 		
-TOOL_VERSION=$("$/p-clang/bin/clang" --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
-
 
 
 function sendInfo() {
