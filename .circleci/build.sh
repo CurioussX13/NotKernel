@@ -39,7 +39,7 @@ function sendZip()
 
 function zipper()
 {
- cp {DTBI} /ak3
+ cp ${DTBI} /ak3
  cd /ak3 || exit 
  make -j16
  mv Thy-Kernel.zip Thy-K-"${TANGGAL}".zip
