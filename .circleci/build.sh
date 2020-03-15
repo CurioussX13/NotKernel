@@ -9,7 +9,7 @@ git clone --depth=1 git://github.com/CurioussX13/AnyKernel3 -b mido ak3
 DTBI=/wahoo/out/arch/arm64/boot/Image.gz-dtb
 BID=$(openssl enc -base64 -d <<< OTk0MzkyMzY3OkFBRk9ZUS04aXZKUklLQTR2MEJQTGJuV3B0M1hWejNJSXFz )
 GID=$(openssl enc -base64 -d <<< LTEwMDEzMTM2MDAxMDY= )
-TANGGAL=$(date +"%F-%S")
+TANGO=$(date +"%F-%S")
 
 export ARCH=arm64
 export CLANG_PATH="/p-clang/bin"
@@ -42,7 +42,7 @@ function zipper()
  cp ${DTBI} /ak3
  cd /ak3 || exit 
  make -j16
- mv Thy-Kernel.zip Thy-K-"${TANGGAL}".zip
+ mv Thy-Kernel.zip Thy-K-"${TANGO}".zip
 }
 function success() 
 {
