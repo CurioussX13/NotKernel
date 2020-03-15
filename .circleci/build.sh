@@ -3,7 +3,6 @@ cd /
 git clone --depth=1 https://github.com/HANA-CI-Build-Project/proton-clang -b master p-clang
 git clone --depth 1 https://github.com/Nicklas373/kernel_xiaomi_msm8953-3.18-2/ -b dev/kasumi wahoo
 git clone --depth=1 git://github.com/CurioussX13/AnyKernel3 -b mido ak3
-TOOL_VERS
 DTBI=/wahoo/out/arch/arm64/boot/Image.dtb-gz
 BID=$(openssl enc -base64 -d <<< OTk0MzkyMzY3OkFBRk9ZUS04aXZKUklLQTR2MEJQTGJuV3B0M1hWejNJSXFz )
 GID=$(openssl enc -base64 -d <<< LTEwMDEzMTM2MDAxMDY= )
@@ -11,11 +10,10 @@ TANGGAL=$(date +"%F-%S")
 export ARCH=arm64
 export CLANG_PATH="/p-clang/bin"
 export PATH=${CLANG_PATH}:${PATH}
-export CROSS_COMPILE=aarch64-linux-gnu-  
-export CROSS_COMPILE_ARM32="/p-clang/bin/arm-linux-gnueabi-"
 export LD_LIBRARY_PATH="/p-clang/bin/../lib:$PATH"
+
 		
-ION=$("$/p-clang/bin/clang" --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
+TOOL_VERSION=$("$/p-clang/bin/clang" --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 
 
 
