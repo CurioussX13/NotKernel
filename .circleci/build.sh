@@ -8,7 +8,7 @@ export ARCH=arm64
 export CLANG_PATH="/p-clang/bin"
 export PATH=${CLANG_PATH}:${PATH}
 export CROSS_COMPILE=aarch64-linux-gnu-  
-export CROSS_COMPILE_ARM32=arm-linux-gnueabi-
+export CROSS_COMPILE_ARM32="/p-clang/bin/arm-linux-gnueabi-"
 export LD_LIBRARY_PATH="/p-clang/bin/../lib:$PATH"
 		
 git clone --depth=1 https://github.com/HANA-CI-Build-Project/proton-clang -b master p-clang
